@@ -14,7 +14,7 @@ if [ -d "$releng_scripts_path" ]; then
 fi
 
 # As toolbox mount the HOME directory, we have to tell 
-# Python to not add the user site-packages dir ($HOME/.local/lib) 
-# to sys.path in order to avoid interaction with host system.
-# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONNOUSERSITE
-export PYTHONNOUSERSITE=1
+# Python to change the default user site-packages dir ($HOME/.local/lib)
+# in order to avoid interaction with host system.
+# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONUSERBASE
+export PYTHONUSERBASE="/usr/local"
