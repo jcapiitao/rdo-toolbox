@@ -12,3 +12,9 @@ releng_scripts_path="/releng/scripts/new_release_scripts"
 if [ -d "$releng_scripts_path" ]; then
     export PATH="$releng_scripts_path:$PATH"
 fi
+
+# As toolbox mount the HOME directory, we have to tell 
+# Python to not add the user site-packages dir ($HOME/.local/lib) 
+# to sys.path in order to avoid interaction with host system.
+# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONNOUSERSITE
+export PYTHONNOUSERSITE=1
