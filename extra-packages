@@ -1,0 +1,16 @@
+ansible
+centos-packager
+createrepo
+fedpkg
+gcc
+glibc-langpack-en
+httpd
+jq
+libffi-devel
+mock
+openssl-devel
+python3-pip
+python3-virtualenv
+redhat-rpm-config
+rpmdevtools
+yum-utils
