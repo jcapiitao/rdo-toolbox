@@ -1,4 +1,5 @@
 FROM registry.fedoraproject.org/fedora:37
+LABEL name="rdo-toolbox"
 
 COPY extra-packages /
 RUN dnf -y install $(<extra-packages) && dnf clean all
