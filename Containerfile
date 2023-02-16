@@ -10,6 +10,7 @@ RUN pip install -r /requirements.txt
 RUN rm /requirements.txt
 
 COPY etc /etc/
+COPY usr/local/bin /usr/local/bin
 COPY etc/profile.d /etc/profile.d
 
 RUN git clone https://github.com/rdo-infra/releng/ /releng

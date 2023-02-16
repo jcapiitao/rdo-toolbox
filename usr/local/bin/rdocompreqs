@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Script to compare upstream changes in requirements.txt file 
+# between latest release and master
+#
+# example:
+#       rdocompsreq <project>
+#       rdocompsreq python-openstackclient
+#
+if [ $# -ne 1 ]; then
+    echo "Script to compare upstream changes in requirements.txt file "
+    echo "between latest release and master."
+    echo ""
+    echo -e "Usage: rdocompsreq python-octaviaclient"
+    exit 1
+fi
+
+project=$1
+
+echo -e "Looking for latest NVR..."
+buildsys_tag_line=$(rdopkg findpkg $project | grep -e "openstack-${RDO_LATEST_RELEASE}-testing:")
+cbs_tag=$(echo -e "$buildsys_tag_line" | cut -d: -f1)
+latest_nvr=$(echo -e "$buildsys_tag_line" | cut -d: -f2)
+echo -e "Latest NVR in $RDO_LATEST_RELEASE: $latest_nvr"
+
+cbs_project_name=$(cbs buildinfo $latest_nvr | grep -e "^/mnt" | head -n 1 |cut -d/ -f5)
+echo -e "Project name in CBS: $cbs_project_name"
+older_nvr=$(cbs list-tagged $cbs_tag | grep -e "$cbs_project_name" | head -n 1 | awk '{print $1}')
+echo -e "Older NVR in $RDO_LATEST_RELEASE: $older_nvr"
+older_version=$(cbs buildinfo $older_nvr | grep -e "^/mnt" | head -n 1 | cut -d/ -f6)
+echo -e "We will compare $older_version tag and master branch"
+
+pushd $(mktemp -d) >/dev/null
+rdopkg clone $project
+pushd $cbs_project_name >/dev/null
+git checkout -q upstream/master
+git --no-pager diff ${older_version}..upstream/master requirements.txt
+popd >/dev/null
+popd >/dev/null
