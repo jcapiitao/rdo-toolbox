@@ -3,12 +3,14 @@ centos-packager
 createrepo
 fedpkg
 gcc
+git-delta
 glibc-langpack-en
 httpd
 jq
 krb5-devel
 libffi-devel
 mock
+neovim
 openssl-devel
 python3-devel
 python3-pip
